@@ -193,25 +193,19 @@ class FreeTTS:
     def pyttsx3_convert(text, output_file, character):
         """Offline TTS with character customization"""
         try:
-            try:
-                import pyttsx3
-            except ImportError:
-                print("pyttsx3 is not available in this environment.")
-                return False
-
             engine = pyttsx3.init()
-
+            
             # Apply character-specific settings
             settings = CHARACTER_VOICES[character]["pyttsx3_settings"]
             engine.setProperty('rate', settings["rate"])
-
+            
             # Adjust pitch (approximation since pyttsx3 doesn't have direct pitch control)
             voices = engine.getProperty('voices')
             if settings["pitch"] == "high":
-                engine.setProperty('voice', voices[1].id)
+                engine.setProperty('voice', voices[1].id)  # Typically higher pitch voice
             elif settings["pitch"] == "low":
-                engine.setProperty('voice', voices[0].id)
-
+                engine.setProperty('voice', voices[0].id)  # Typically lower pitch voice
+            
             engine.save_to_file(text, output_file)
             engine.runAndWait()
             return True
