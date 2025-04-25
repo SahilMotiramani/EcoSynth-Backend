@@ -74,7 +74,7 @@ hpack==3.0.0
 hstspreload==2025.1.1
 httpcore==0.9.0
 httplib2==0.22.0
-httpx
+httpx==0.27.0  # Added a specific version for httpx
 huggingface-hub==0.30.1
 hyperframe==5.2.0
 idna==2.10
@@ -107,13 +107,13 @@ mpmath==1.3.0
 msgpack==1.1.0
 multidict==6.2.0
 murmurhash==1.0.12
-networkx
+networkx  # Please specify a version if needed
 nltk==3.9.1
 noisereduce==3.0.3
 num2words==0.5.14
 numba==0.61.2
 numpy==1.24.3
-openai
+openai  # Please specify a version if needed
 opencv-python==4.11.0.86
 packaging==24.2
 pandas==2.0.3
@@ -136,7 +136,6 @@ Pygments==2.19.1
 pynndescent==0.5.13
 pyparsing==3.2.3
 pypinyin==0.54.0
-
 pysbd==0.3.4
 PySocks==1.7.1
 python-crfsuite==0.9.11
@@ -144,10 +143,9 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 pyttsx3==2.98
 pytz==2025.2
-
 PyYAML==6.0.2
 regex==2024.11.6
-replicate
+replicate  # Please specify a version if needed
 requests==2.32.3
 rfc3986==1.5.0
 rich==14.0.0
