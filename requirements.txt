@@ -181,7 +181,7 @@ tqdm==4.67.1
 trainer==0.0.36
 transformers==4.50.3
 translator==0.0.9
-# TTS==0.22.0  # Removed due to numpy conflict
+TTS  # Removed due to numpy conflict
 typeguard==4.4.2
 typer==0.15.2
 typing-inspection==0.4.0
