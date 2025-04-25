@@ -113,7 +113,7 @@ noisereduce==3.0.3
 num2words==0.5.14
 numba==0.61.2
 numpy==1.24.3
-openai==1.70.0
+openai
 opencv-python==4.11.0.86
 packaging==24.2
 pandas==2.0.3
