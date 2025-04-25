@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 import os
 import uuid
-# import pyttsx3  # Removed: not compatible with Render
+import pyttsx3  # Free offline TTS
 import edge_tts  # Free Microsoft Edge TTS
 import asyncio
 from TTS.api import TTS
@@ -136,42 +136,52 @@ CHARACTER_VOICES = {
     "child": {
         "edge_voice": "en-US-AnaNeural",
         "description": "Happy Child (6-8 years)",
+        "pyttsx3_settings": {"rate": 180, "pitch": "high"}
     },
     "teen_boy": {
         "edge_voice": "en-US-GuyNeural",
         "description": "Teenage Boy (14-16)",
+        "pyttsx3_settings": {"rate": 160, "pitch": "medium"}
     },
     "young_woman": {
         "edge_voice": "en-US-AriaNeural",
         "description": "Young Woman (20s)",
+        "pyttsx3_settings": {"rate": 150, "pitch": "medium"}
     },
     "businessman": {
         "edge_voice": "en-US-DavisNeural",
         "description": "Professional Businessman",
+        "pyttsx3_settings": {"rate": 140, "pitch": "low"}
     },
     "grandma": {
         "edge_voice": "en-US-JennyNeural",
         "description": "Kind Grandmother",
+        "pyttsx3_settings": {"rate": 130, "pitch": "low"}
     },
     "grandpa": {
         "edge_voice": "en-US-JasonNeural",
         "description": "Wise Grandfather",
+        "pyttsx3_settings": {"rate": 120, "pitch": "low"}
     },
     "robot": {
         "edge_voice": "en-US-TonyNeural",
         "description": "Futuristic Robot",
+        "pyttsx3_settings": {"rate": 110, "pitch": "high"}
     },
     "storyteller": {
         "edge_voice": "en-US-BrianNeural",
         "description": "Dramatic Storyteller",
+        "pyttsx3_settings": {"rate": 125, "pitch": "medium"}
     },
     "announcer": {
         "edge_voice": "en-US-EricNeural",
         "description": "Sports Announcer",
+        "pyttsx3_settings": {"rate": 145, "pitch": "high"}
     },
     "whisper": {
         "edge_voice": "en-US-JaneNeural",
         "description": "Mysterious Whisper",
+        "pyttsx3_settings": {"rate": 100, "pitch": "high"}
     }
 }
 
@@ -180,14 +190,33 @@ def allowed_file(filename):
 
 class FreeTTS:
     @staticmethod
-    def gtts_convert(text, output_file, character=None):
-        """Google TTS fallback when pyttsx3 is not available"""
+    def pyttsx3_convert(text, output_file, character):
+        """Offline TTS with character customization"""
         try:
-            tts = gTTS(text=text, lang='en', slow=False)
-            tts.save(output_file)
+            try:
+                import pyttsx3
+            except ImportError:
+                print("pyttsx3 is not available in this environment.")
+                return False
+
+            engine = pyttsx3.init()
+
+            # Apply character-specific settings
+            settings = CHARACTER_VOICES[character]["pyttsx3_settings"]
+            engine.setProperty('rate', settings["rate"])
+
+            # Adjust pitch (approximation since pyttsx3 doesn't have direct pitch control)
+            voices = engine.getProperty('voices')
+            if settings["pitch"] == "high":
+                engine.setProperty('voice', voices[1].id)
+            elif settings["pitch"] == "low":
+                engine.setProperty('voice', voices[0].id)
+
+            engine.save_to_file(text, output_file)
+            engine.runAndWait()
             return True
         except Exception as e:
-            print(f"gTTS error: {e}")
+            print(f"pyttsx3 error: {e}")
             return False
 
     @staticmethod
@@ -308,7 +337,7 @@ async def text_to_speech():
     data = request.json
     text = data.get('text')
     character = data.get('character', 'young_woman')
-    engine = data.get('engine', 'edge')  # 'edge' or 'gtts' (replacing pyttsx3)
+    engine = data.get('engine', 'edge')  # 'edge' or 'pyttsx3'
     
     if not text:
         return jsonify({'error': 'No text provided'}), 400
@@ -317,8 +346,8 @@ async def text_to_speech():
         output_filename = f"tts_{uuid.uuid4()}.mp3"
         output_path = os.path.join(app.config['AUDIO_OUTPUT_FOLDER'], output_filename)
         
-        if engine == 'gtts':
-            success = FreeTTS.gtts_convert(text, output_path, character)
+        if engine == 'pyttsx3':
+            success = FreeTTS.pyttsx3_convert(text, output_path, character)
         else:
             success = await FreeTTS.edge_tts_convert(text, output_path, character)
         
@@ -468,22 +497,5 @@ def serve_upload(filename):
 def serve_audio(filename):
     return send_from_directory(app.config['AUDIO_OUTPUT_FOLDER'], filename)
 
-# Add a root route to indicate server is running
-@app.route('/')
-def index():
-    return jsonify({
-        'status': 'online',
-        'message': 'AI Voice Assistant API is running',
-        'endpoints': {
-            'health_check': '/api/health',
-            'text_to_speech': '/text-to-speech',
-            'generate_script': '/api/generate-script',
-            'character_voices': '/character-voices',
-            'languages': '/languages'
-        }
-    })
-
 if __name__ == '__main__':
-    # Use environment variable PORT for Render compatibility
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
