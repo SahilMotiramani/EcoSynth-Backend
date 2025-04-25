@@ -136,7 +136,7 @@ Pygments==2.19.1
 pynndescent==0.5.13
 pyparsing==3.2.3
 pypinyin==0.54.0
-pypiwin32==223
+
 pysbd==0.3.4
 PySocks==1.7.1
 python-crfsuite==0.9.11
@@ -144,7 +144,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 pyttsx3==2.98
 pytz==2025.2
-pywin32
+
 PyYAML==6.0.2
 regex==2024.11.6
 replicate==1.0.4
