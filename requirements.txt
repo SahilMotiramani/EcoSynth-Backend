@@ -112,7 +112,7 @@ nltk==3.9.1
 noisereduce==3.0.3
 num2words==0.5.14
 numba==0.61.2
-numpy==1.22.0  # Trying to satisfy tts
+numpy  # Let pip resolve this
 openai  # Please specify a version if needed
 opencv-python==4.11.0.86
 packaging==24.2
@@ -181,7 +181,7 @@ tqdm==4.67.1
 trainer==0.0.36
 transformers==4.50.3
 translator==0.0.9
-TTS==0.22.0
+# TTS==0.22.0  # Removed due to numpy conflict
 typeguard==4.4.2
 typer==0.15.2
 typing-inspection==0.4.0
