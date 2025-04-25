@@ -74,7 +74,7 @@ hpack==3.0.0
 hstspreload==2025.1.1
 httpcore==0.9.0
 httplib2==0.22.0
-httpx  # Removed the explicit version
+httpx  # Let pip resolve this
 huggingface-hub==0.30.1
 hyperframe==5.2.0
 idna==2.10
@@ -112,7 +112,7 @@ nltk==3.9.1
 noisereduce==3.0.3
 num2words==0.5.14
 numba==0.61.2
-numpy==1.24.3
+numpy==1.22.0  # Trying to satisfy tts
 openai  # Please specify a version if needed
 opencv-python==4.11.0.86
 packaging==24.2
