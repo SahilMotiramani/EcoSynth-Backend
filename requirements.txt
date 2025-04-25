@@ -147,7 +147,7 @@ pytz==2025.2
 
 PyYAML==6.0.2
 regex==2024.11.6
-replicate==1.0.4
+replicate
 requests==2.32.3
 rfc3986==1.5.0
 rich==14.0.0
