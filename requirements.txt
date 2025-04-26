@@ -19,4 +19,7 @@ soundfile
 SpeechRecognition
 pygame
 requests
-f5-tts
+torch 
+torchvision
+torchaudio
+TTS
