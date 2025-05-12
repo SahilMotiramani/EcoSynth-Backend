@@ -5,7 +5,7 @@ flask-cors
 # Text-to-Speech and speech recognition
 pyttsx3
 edge-tts
-TTS==0.22.0           # Specific version to ensure compatibility
+TTS           # Specific version to ensure compatibility
 SpeechRecognition
 googletrans==4.0.0rc1
 gtts
