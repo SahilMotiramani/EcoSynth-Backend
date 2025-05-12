@@ -7,7 +7,7 @@ pyttsx3
 edge-tts
 TTS           # Specific version to ensure compatibility
 SpeechRecognition
-googletrans==4.0.0rc1
+googletrans
 gtts
 
 # Audio/Video handling
