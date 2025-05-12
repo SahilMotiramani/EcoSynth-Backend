@@ -1,25 +1,24 @@
-Flask
+# Core backend framework
+flask
 flask-cors
+
+# Text-to-Speech and speech recognition
 pyttsx3
 edge-tts
-googletrans
-gTTS
-google-api-python-client
-google-auth
-google-auth-httplib2
-google-generativeai
-numpy
+TTS==0.22.0           # Specific version to ensure compatibility
+SpeechRecognition
+googletrans==4.0.0rc1
+gtts
+
+# Audio/Video handling
+pygame
+noisereduce
 opencv-python
 moviepy
-torch
-transformers
-librosa
-noisereduce
-soundfile
-SpeechRecognition
-pygame
-requests
-torch 
-torchvision
-torchaudio
-TTS
+
+# Numerical and scientific computing
+numpy<2.0
+scipy==1.11.4         # Compatible with NumPy < 2.0
+pandas==1.5.3         # Compatible with older NumPy versions
+numba==0.56.4         # Compatible with NumPy < 2.0
+librosa==0.9.2        # Compatible with the above stack
